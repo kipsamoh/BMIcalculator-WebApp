@@ -2,10 +2,8 @@ BMIcalculator-WebApp
 ========
 
 BMIcalculator-WebApp is a simple Flask web application designed to calculate Body Mass Index (BMI) and provide health recommendations based on the BMI value. The application also includes informational pages about the service, a blog section, a contact page, and a user login feature.
-
 Table of Contents
-
------------------
+========
 
 -   [Features](#features)
 
@@ -22,8 +20,7 @@ Table of Contents
 -   [License](#license)
 
 Features
-
---------
+========
 
 -   **Home Page**: Calculate your BMI by entering your height and weight.
 
@@ -38,8 +35,7 @@ Features
 -   **BMI Calculation**: Provide health recommendations based on calculated BMI.
 
 Setup
-
------
+========
 
 ### Prerequisites
 
@@ -76,8 +72,7 @@ source venv/bin/activate   # On Windows: venv\Scripts\activate`
 Open your web browser and navigate to `http://localhost:5000`.
 
 Usage
-
------
+========
 
 -   Navigate to the home page to calculate your BMI by entering your height and weight.
 
@@ -90,8 +85,7 @@ Usage
 -   Login using the Login page to access personalized content.
 
 File Structure
-
---------------
+========
 
 `BMIcare/
 
@@ -122,9 +116,7 @@ File Structure
 └── README.md
 
 Contributing
-
-------------
-
+========
 We welcome contributions to enhance the BMI Care application. Please follow these steps to contribute:
 
 1\.  Fork the repository.
@@ -138,7 +130,6 @@ We welcome contributions to enhance the BMI Care application. Please follow thes
 5\.  Open a pull request.
 
 License
-
--------
+========
 
 This project is licensed under the MIT License. See the LICENSE file for details.
