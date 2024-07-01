@@ -1,5 +1,4 @@
 BMIcalculator-WebApp
-
 ========
 
 BMIcalculator-WebApp is a simple Flask web application designed to calculate Body Mass Index (BMI) and provide health recommendations based on the BMI value. The application also includes informational pages about the service, a blog section, a contact page, and a user login feature.
@@ -114,11 +113,11 @@ File Structure
 
 │   ├── result.html
 
-├── app.py                
+├── app.py
 
-├── bmi_calculator.py    
+├── bmi_calculator.py
 
-├── requirements.txt       
+├── requirements.txt
 
 └── README.md
 
