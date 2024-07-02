@@ -3,18 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
+    <title>BMI Blog</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('blog') }}">Blog</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
-        <h1>Blog</h1>
-        {% for post in blog_posts %}
-            <div class="blog-post">
-                <h2>{{ post.title }}</h2>
-                <p>{{ post.content }}</p>
-            </div>
-        {% endfor %}
+        <h1>BMI Blog</h1>
+        <div class="blog-post">
+            <h2>Understanding BMI and Its Importance</h2>
+            <p>If you've visited our offices since October, you might have received our new 'Weight Management' handout discussing BMI. This initiative is not a preemptive strike on New Year's resolutions! Like many healthcare providers, we participate in a program designed to enhance Medicare by improving care quality and patient health. Consequently, Medicare requires us to counsel patients on various health and risk measures, one of which is weight management, especially relevant in our orthopedic practice.</p>
+            
+            <h3>BMI: A Standard Health Calculation</h3>
+            <p>We adhere to established standards for using BMI as a health metric. As illustrated in the included chart, BMI classifications are divided into four categories. In our clinic, for instance, weight management counseling isn't necessary if your BMI falls within the 'Normal' range. However, for other categories, weight management counseling is recommended.</p>
+            
+            <p>You might wonder, "Why use BMI? I've heard it's not very accurate. Isn't there a better way to assess my health?" We understand! BMI is just one of many tools for general weight classification. In this blog, we'll explore the history of BMI's use in healthcare.</p>
+            
+            <h3>The History of BMI</h3>
+            <p>In the early 19th century, Belgian mathematician Lambert Adolphe Jacques Quetelet developed a formula to help his government gauge obesity levels in the population. He devised what we now know as BMI: Weight in kilograms divided by height in meters squared. The height is squared to align with the data available at the time. Though not perfect, this method has been used for nearly 200 years.</p>
+            
+            <h3>Limitations of BMI</h3>
+            <p>One significant limitation of BMI is that it doesn't consider bone density, muscle mass, or body fat percentage. For instance, someone with a sedentary lifestyle and high body fat might rightly be categorized as obese. Conversely, a 5'4" gymnast weighing 150 pounds of muscle would have a BMI of 25.7, classifying them as overweight.</p>
+            
+            <p>Most people aren't elite athletes, so BMI remains a quick and simple tool for estimating body fat in most settings.</p>
+            
+            <h3>Alternative Health Calculations</h3>
+            <p>Another method to assess obesity is the Waist-to-Hip Ratio, which measures waist and hip circumferences to determine fat distribution. This method can indicate higher risks for health conditions like type 2 diabetes and heart disease.</p>
+            
+            <p>However, this method has limitations:
+            <ul>
+                <li>It’s not suitable for children.</li>
+                <li>It’s less accurate for those under 5 feet tall.</li>
+                <li>It’s not recommended for individuals with a BMI over 35.</li>
+                <li>Measurement inaccuracies can occur if taken at different body sites.</li>
+            </ul>
+            </p>
+            
+            <h3>Curious About Your BMI?</h3>
+            <p>Use our provided calculator to see where you fall on the scale! At Kansas City Bone and Joint Clinic, our providers can help you set and achieve your health goals.</p>
+        </div>
     </div>
+
+    <footer>
+        <p>&copy; 2024 BMI Care. All rights reserved.</p>
+    </footer>
 </body>
 </html>
