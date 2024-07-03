@@ -4,8 +4,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
 
-# In-memory user store (use a database in production)
-users = {}
+# Example user store (replace with database in production)
+users = {
+    'john': {'password': generate_password_hash('password123')},
+    'jane': {'password': generate_password_hash('password456')}
+}
 
 # Route for the Home page
 @bmi_calculator_blueprint.route('/')
@@ -28,6 +31,7 @@ def about():
 # Route for the Blog page
 @bmi_calculator_blueprint.route('/blog')
 def blog():
+    # Example blog data (replace with actual data retrieval)
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
         {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
