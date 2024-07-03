@@ -1,35 +1,57 @@
-from flask import Flask, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from bmi_calculator import bmi_calculator  # Import the package instead of the blueprint
+from flask import Flask, render_template, request, redirect, url_for
+from bmi_calculator import bmi_calculator_blueprint
 
-# Initialize Flask application
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'
 
-# Configure SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Registering the blueprint for BMI calculator routes
+app.register_blueprint(bmi_calculator_blueprint)
 
-# Initialize SQLAlchemy
-db = SQLAlchemy(app)
+# Example user database (replace with your actual user management)
+users = {
+    'john': {'password': 'password123'},
+    'jane': {'password': 'password456'}
+}
 
-# Initialize Flask-Login
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
-
-# Register blueprint for BMI calculator routes
-app.register_blueprint(bmi_calculator, url_prefix='/bmi_calculator')
-
-# Home page redirect
+# Home page
 @app.route('/')
 def home():
     return redirect(url_for('bmi_calculator.home'))
 
-# Ensure the database tables are created before the first request
-# Note: Using 'with app.app_context()' to handle database initialization
-with app.app_context():
-    db.create_all()
+# About page
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+# Blog page
+@app.route('/blog')
+def blog():
+    # Sample data for blog posts (replace with actual data retrieval logic)
+    blog_posts = [
+        {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
+        {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
+        {'title': 'Third Blog Post', 'content': 'Sed do eiusmod tempor incididunt...'}
+    ]
+    return render_template('blog.html', blog_posts=blog_posts)
+
+# Contact page
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+# Login page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if username in users and users[username]['password'] == password:
+            # Example: set session variable for logged in user
+            return redirect(url_for('bmi_calculator.home'))
+        else:
+            return render_template('login.html', error='Invalid username or password')
+
+    return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
