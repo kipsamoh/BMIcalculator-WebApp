@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_required, login_user, logout_user, current_user
-from bmi_calculator import bmi_calculator_blueprint
+from flask_login import LoginManager
+from bmi_calculator import bmi_calculator_blueprint  # Import blueprint after initializing Flask app
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 
 # Initialize Flask-Login
 login_manager = LoginManager(app)
-login_manager.login_view = 'bmi_calculator.login'
+login_manager.login_view = 'bmi_calculator.login'  # Specify the login view for Flask-Login
 
 # Register blueprint for BMI calculator routes
 app.register_blueprint(bmi_calculator_blueprint, url_prefix='/bmi_calculator')
