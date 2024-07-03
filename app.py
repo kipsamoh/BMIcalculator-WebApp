@@ -1,14 +1,27 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from bmi_calculator import bmi_calculator_blueprint
+from flask import Flask, render_template, redirect, url_for, session, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
+from bmi_calculator import bmi_calculator_blueprint
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # Replace with a secure key
+app.secret_key = 'your_secret_key_here'
 
-# Registering the blueprint for BMI calculator routes
-app.register_blueprint(bmi_calculator_blueprint)
+# Configure SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# In-memory user store (replace with your actual user management)
+# Initialize SQLAlchemy
+db = SQLAlchemy(app)
+
+# Initialize Flask-Login
+login_manager = LoginManager(app)
+login_manager.login_view = 'bmi_calculator.login'
+
+# Register blueprint for BMI calculator routes
+app.register_blueprint(bmi_calculator_blueprint, url_prefix='/bmi_calculator')
+
+# Example users (replace with database in production)
 users = {
     'john': {'password': generate_password_hash('password123')},
     'jane': {'password': generate_password_hash('password456')}
@@ -27,7 +40,7 @@ def about():
 # Blog page
 @app.route('/blog')
 def blog():
-    # data for blog posts (replace with actual data retrieval logic)
+    # Example blog data (replace with actual data retrieval)
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
         {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
