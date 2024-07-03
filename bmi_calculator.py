@@ -1,11 +1,15 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from app import db, login_manager
+from models import User
+from flask_login import login_user, logout_user, current_user, login_required
 
 # Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
 
-# In-memory user store (use a database in production)
-users = {}
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # Route for the Home page
 @bmi_calculator_blueprint.route('/')
@@ -46,9 +50,9 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = users.get(username)
-        if user and check_password_hash(user['password'], password):
-            session['username'] = username
+        user = User.query.filter_by(username=username).first()
+        if user and check_password_hash(user.password, password):
+            login_user(user)
             return redirect(url_for('bmi_calculator.dashboard'))
         else:
             flash("Invalid credentials. Please try again.")
@@ -61,42 +65,40 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        if username in users:
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
             flash("Username already exists. Please choose a different one.")
         else:
             hashed_password = generate_password_hash(password, method='sha256')
-            users[username] = {'email': email, 'password': hashed_password}
+            new_user = User(username=username, email=email, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
             flash("Registration successful! Please log in.")
             return redirect(url_for('bmi_calculator.login'))
     return render_template('register.html')
 
 # Route for the Dashboard (protected page)
 @bmi_calculator_blueprint.route('/dashboard')
+@login_required
 def dashboard():
-    if 'username' not in session:
-        return redirect(url_for('bmi_calculator.login'))
-    username = session['username']
-    return render_template('dashboard.html', username=username)
+    return render_template('dashboard.html', username=current_user.username)
 
 # Route for the Profile page
 @bmi_calculator_blueprint.route('/profile')
+@login_required
 def profile():
-    if 'username' not in session:
-        return redirect(url_for('bmi_calculator.login'))
-    username = session['username']
-    user_data = users.get(username)
-    return render_template('profile.html', user=user_data)
+    return render_template('profile.html', user=current_user)
 
 # Route for the Settings page
 @bmi_calculator_blueprint.route('/settings')
+@login_required
 def settings():
-    if 'username' not in session:
-        return redirect(url_for('bmi_calculator.login'))
     return render_template('settings.html')
 
 # Route for the Logout
 @bmi_calculator_blueprint.route('/logout')
+@login_required
 def logout():
-    session.pop('username', None)
+    logout_user()
     flash("You have been logged out.")
     return redirect(url_for('bmi_calculator.login'))
