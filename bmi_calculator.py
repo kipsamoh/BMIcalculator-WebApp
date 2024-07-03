@@ -5,19 +5,19 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import login_manager  # Import login_manager from app
 
 # Blueprint definition
-bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
+bmi_calculator = Blueprint('bmi_calculator', __name__)
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Route for the Home page
-@bmi_calculator_blueprint.route('/')
+@bmi_calculator.route('/')
 def home():
     return render_template('index.html')
 
 # Route for BMI calculation
-@bmi_calculator_blueprint.route('/calculate_bmi', methods=['POST'])
+@bmi_calculator.route('/calculate_bmi', methods=['POST'])
 def calculate_bmi():
     height = float(request.form['height'])
     weight = float(request.form['weight'])
@@ -25,12 +25,12 @@ def calculate_bmi():
     return render_template('index.html', bmi=bmi)
 
 # Route for the About page
-@bmi_calculator_blueprint.route('/about')
+@bmi_calculator.route('/about')
 def about():
     return render_template('about.html')
 
 # Route for the Blog page
-@bmi_calculator_blueprint.route('/blog')
+@bmi_calculator.route('/blog')
 def blog():
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
@@ -40,12 +40,12 @@ def blog():
     return render_template('blog.html', blog_posts=blog_posts)
 
 # Route for the Contact page
-@bmi_calculator_blueprint.route('/contact')
+@bmi_calculator.route('/contact')
 def contact():
     return render_template('contact.html')
 
 # Route for the Login page
-@bmi_calculator_blueprint.route('/login', methods=['GET', 'POST'])
+@bmi_calculator.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
@@ -59,7 +59,7 @@ def login():
     return render_template('login.html')
 
 # Route for the Registration page
-@bmi_calculator_blueprint.route('/register', methods=['GET', 'POST'])
+@bmi_calculator.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
@@ -78,25 +78,25 @@ def register():
     return render_template('register.html')
 
 # Route for the Dashboard (protected page)
-@bmi_calculator_blueprint.route('/dashboard')
+@bmi_calculator.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html', username=current_user.username)
 
 # Route for the Profile page
-@bmi_calculator_blueprint.route('/profile')
+@bmi_calculator.route('/profile')
 @login_required
 def profile():
     return render_template('profile.html', user=current_user)
 
 # Route for the Settings page
-@bmi_calculator_blueprint.route('/settings')
+@bmi_calculator.route('/settings')
 @login_required
 def settings():
     return render_template('settings.html')
 
 # Route for the Logout
-@bmi_calculator_blueprint.route('/logout')
+@bmi_calculator.route('/logout')
 @login_required
 def logout():
     logout_user()
@@ -104,7 +104,7 @@ def logout():
     return redirect(url_for('bmi_calculator.login'))
 
 # Route for sending a message
-@bmi_calculator_blueprint.route('/send_message', methods=['POST'])
+@bmi_calculator.route('/send_message', methods=['POST'])
 @login_required
 def send_message():
     name = request.form['name']
