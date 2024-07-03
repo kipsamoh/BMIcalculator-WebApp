@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db, login_manager  # Import db and login_manager from app
-from models import User, Message  # Import User and Message models
+from models import db, User, Message  # Import db and models from the package
+from flask_login import login_user, logout_user, current_user, login_required
 
 # Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
