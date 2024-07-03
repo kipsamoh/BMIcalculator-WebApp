@@ -1,30 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, User, Message  # Import db and models from the package
-from flask_login import login_user, logout_user, current_user, login_required
+from flask import Blueprint, render_template, request
 
 # Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
-
-# Adjust the import of login_manager after its initialization in app.py
-from app import login_manager
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 # Route for the Home page
 @bmi_calculator_blueprint.route('/')
 def home():
     return render_template('index.html')
-
-# Route for BMI calculation
-@bmi_calculator_blueprint.route('/calculate_bmi', methods=['POST'])
-def calculate_bmi():
-    height = float(request.form['height'])
-    weight = float(request.form['weight'])
-    bmi = weight / ((height / 100) ** 2)
-    return render_template('index.html', bmi=bmi)
 
 # Route for the About page
 @bmi_calculator_blueprint.route('/about')
@@ -34,6 +16,7 @@ def about():
 # Route for the Blog page
 @bmi_calculator_blueprint.route('/blog')
 def blog():
+    # Sample data for blog posts (replace with actual data retrieval logic)
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
         {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
@@ -50,76 +33,62 @@ def contact():
 @bmi_calculator_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        # Implement your login logic here
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
-        if user and check_password_hash(user.password, password):
-            login_user(user)
-            return redirect(url_for('bmi_calculator.dashboard'))
+        # Example: Check username and password validity
+        if username == 'admin' and password == 'password':
+            # Redirect to a protected page or dashboard
+            return render_template('dashboard.html', username=username)
         else:
-            flash("Invalid credentials. Please try again.")
+            # Display login failed message or redirect to login page with error
+            return render_template('login.html', error="Invalid credentials. Please try again.")
+    # If GET method, display the login form
     return render_template('login.html')
-
-# Route for the Registration page
-@bmi_calculator_blueprint.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        existing_user = User.query.filter_by(username=username).first()
-        if existing_user:
-            flash("Username already exists. Please choose a different one.")
-        else:
-            hashed_password = generate_password_hash(password, method='sha256')
-            new_user = User(username=username, email=email, password=hashed_password)
-            db.session.add(new_user)
-            db.session.commit()
-            flash("Registration successful! Please log in.")
-            return redirect(url_for('bmi_calculator.login'))
-    return render_template('register.html')
 
 # Route for the Dashboard (protected page)
 @bmi_calculator_blueprint.route('/dashboard')
-@login_required
 def dashboard():
-    return render_template('dashboard.html', username=current_user.username)
+    # Example: Check if user is authenticated (session-based or token-based)
+    # For demonstration, assume authenticated
+    username = 'admin'  # Replace with actual authentication logic
+    return render_template('dashboard.html', username=username)
 
-# Route for the Profile page
-@bmi_calculator_blueprint.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', user=current_user)
+# Route for BMI calculation
+@bmi_calculator_blueprint.route('/calculate_bmi', methods=['POST'])
+def calculate_bmi():
+    # Extracting height and weight from the form
+    height = float(request.form['height'])
+    weight = float(request.form['weight'])
 
-# Route for the Settings page
+    # Calculating BMI
+    bmi = weight / ((height / 100) ** 2)
+
+    # Determining recommendation based on BMI
+    if bmi < 18.5:
+        recommendation = "You are underweight. You should consider gaining some weight."
+    elif bmi >= 18.5 and bmi < 24.9:
+        recommendation = "Your weight is normal. Keep up the good work!"
+    elif bmi >= 25 and bmi < 29.9:
+        recommendation = "You are overweight. You should consider losing some weight."
+    else:
+        recommendation = "You are obese. It's important to prioritize weight loss for your health."
+
+    # Rendering the result template with BMI value and recommendation
+    return render_template('result.html', bmi=bmi, recommendation=recommendation)
+
+# Optional: Add more routes for additional pages as needed
 @bmi_calculator_blueprint.route('/settings')
-@login_required
 def settings():
     return render_template('settings.html')
 
-# Route for the Logout
+@bmi_calculator_blueprint.route('/profile')
+def profile():
+    # Fetch user profile data (replace with actual logic)
+    user_data = {'name': 'John Doe', 'email': 'john.doe@example.com', 'age': 30}
+    return render_template('profile.html', user=user_data)
+
 @bmi_calculator_blueprint.route('/logout')
-@login_required
 def logout():
-    logout_user()
-    flash("You have been logged out.")
-    return redirect(url_for('bmi_calculator.login'))
-
-# Route for sending a message
-@bmi_calculator_blueprint.route('/send_message', methods=['POST'])
-@login_required
-def send_message():
-    name = request.form['name']
-    email = request.form['email']
-    message_content = request.form['message']
-    
-    # Create a new message object
-    new_message = Message(name=name, email=email, message=message_content)
-    
-    # Add the message to the database session
-    db.session.add(new_message)
-    db.session.commit()
-    
-    flash("Message sent successfully!")
-
-    return redirect(url_for('bmi_calculator.contact'))
+    # Implement logout logic (clear session, redirect to login page)
+    return render_template('login.html', message="You have been logged out.")
