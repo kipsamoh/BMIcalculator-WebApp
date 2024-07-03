@@ -22,8 +22,8 @@ def calculate_bmi():
     return render_template('index.html', bmi_result=bmi)
 
 # Route for blog page
-@app.route('/blog')
-def HealthFitnessBlogs():
+@app.route('/Health & Fitness Blogs')
+def blog():
     # Dummy blog posts (replace with actual data retrieval logic)
     blog_posts = [
         {'title': 'First Post', 'content': 'Content of first post'},
