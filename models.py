@@ -1,5 +1,3 @@
-# models.py
-
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
@@ -15,4 +13,3 @@ class Message(db.Model):
 
     def __repr__(self):
         return f"Message from {self.name} ({self.email})"
-
