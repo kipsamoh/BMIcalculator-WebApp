@@ -1,11 +1,11 @@
-from flask import Flask, render_template, redirect, url_for, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from bmi_calculator import bmi_calculator_blueprint
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'
+app.secret_key = 'your_secret_key_here'  # Replace with a secure key
 
 # Configure SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -16,12 +16,24 @@ db = SQLAlchemy(app)
 
 # Initialize Flask-Login
 login_manager = LoginManager(app)
-login_manager.login_view = 'bmi_calculator.login'
+login_manager.login_view = 'login'
 
-# Register blueprint for BMI calculator routes
-app.register_blueprint(bmi_calculator_blueprint, url_prefix='/bmi_calculator')
+# Example User class (replace with your User model)
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
 
-# Example users (replace with database in production)
+# User loader function
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# Registering the blueprint for BMI calculator routes
+app.register_blueprint(bmi_calculator_blueprint)
+
+# In-memory user store (replace with your actual user management)
 users = {
     'john': {'password': generate_password_hash('password123')},
     'jane': {'password': generate_password_hash('password456')}
@@ -40,7 +52,7 @@ def about():
 # Blog page
 @app.route('/blog')
 def blog():
-    # Example blog data (replace with actual data retrieval)
+    # data for blog posts (replace with actual data retrieval logic)
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
         {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
@@ -62,7 +74,8 @@ def login():
         
         user = users.get(username)
         if user and check_password_hash(user['password'], password):
-            session['username'] = username
+            # Example using Flask-Login's login_user function
+            login_user(User.query.filter_by(username=username).first())
             return redirect(url_for('bmi_calculator.dashboard'))
         else:
             flash('Invalid username or password', 'error')
@@ -89,35 +102,28 @@ def register():
 
 # Dashboard (protected route)
 @app.route('/dashboard')
+@login_required
 def dashboard():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    
-    username = session['username']
-    return render_template('dashboard.html', username=username)
+    return render_template('dashboard.html', username=current_user.username)
 
 # Profile page (protected route)
 @app.route('/profile')
+@login_required
 def profile():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    
-    username = session['username']
-    user_data = users.get(username)
+    user_data = users.get(current_user.username)
     return render_template('profile.html', user=user_data)
 
 # Settings page (protected route)
 @app.route('/settings')
+@login_required
 def settings():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    
     return render_template('settings.html')
 
 # Logout
 @app.route('/logout')
+@login_required
 def logout():
-    session.pop('username', None)
+    logout_user()
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
 
