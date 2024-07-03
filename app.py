@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from bmi_calculator import bmi_calculator_blueprint
+from bmi_calculator import bmi_calculator  # Import the package instead of the blueprint
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -19,7 +19,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 # Register blueprint for BMI calculator routes
-app.register_blueprint(bmi_calculator_blueprint, url_prefix='/bmi_calculator')
+app.register_blueprint(bmi_calculator, url_prefix='/bmi_calculator')
 
 # Home page redirect
 @app.route('/')
