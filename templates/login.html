@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - BMI Care</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <nav>
@@ -14,26 +14,31 @@
             <li><a href="{{ url_for('blog') }}">Blog</a></li>
             <li><a href="{{ url_for('contact') }}">Contact</a></li>
             <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
         </ul>
     </nav>
 
-    <main>
+    <div class="container">
         <h1>Login</h1>
-        <form action="{{ url_for('login') }}" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
             <button type="submit">Login</button>
         </form>
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
         {% if error %}
-            <p>{{ error }}</p>
+            <p class="error">{{ error }}</p>
         {% endif %}
-    </main>
+    </div>
 
     <footer>
         <p>&copy; 2024 BMI Care. All rights reserved.</p>
     </footer>
 </body>
 </html>
-
