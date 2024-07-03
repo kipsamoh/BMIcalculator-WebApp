@@ -1,6 +1,5 @@
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from bmi_calculator import bmi_calculator_blueprint
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -13,18 +12,21 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize SQLAlchemy
 db = SQLAlchemy(app)
 
-# Register blueprint for BMI calculator routes
-app.register_blueprint(bmi_calculator_blueprint, url_prefix='/bmi_calculator')
-
 # Home page redirect
 @app.route('/')
 def home():
+    from bmi_calculator import bmi_calculator_blueprint  # Import inside function to avoid circular import
     return redirect(url_for('bmi_calculator.home'))
 
 # Ensure the database tables are created before the first request
 @app.before_first_request
 def create_tables():
+    from bmi_calculator import bmi_calculator_blueprint  # Import inside function to avoid circular import
     db.create_all()
+
+# Register blueprint for BMI calculator routes
+from bmi_calculator import bmi_calculator_blueprint
+app.register_blueprint(bmi_calculator_blueprint, url_prefix='/bmi_calculator')
 
 if __name__ == '__main__':
     app.run(debug=True)
