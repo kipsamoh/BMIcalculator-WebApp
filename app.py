@@ -3,6 +3,12 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Necessary for flash messages to work
 
+# Dummy users for login (replace with actual authentication logic)
+users = {
+    'user1': {'username': 'user1', 'password': 'password1'},
+    'user2': {'username': 'user2', 'password': 'password2'}
+}
+
 # Route for home page
 @app.route('/')
 def home():
@@ -91,16 +97,19 @@ def contact():
         return redirect(url_for('contact'))
     return render_template('contact.html')
 
-# Route for login page (dummy implementation)
+# Route for login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Dummy login logic (replace with actual authentication)
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        
         if username in users and users[username]['password'] == password:
-            # Dummy login success handling (replace with actual session management)
+            flash('Login successful!', 'success')
             return redirect(url_for('home'))
+        else:
+            flash('Wrong credentials! Please try again.', 'danger')
+    
     return render_template('login.html')
 
 if __name__ == '__main__':
