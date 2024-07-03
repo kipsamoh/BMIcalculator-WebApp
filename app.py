@@ -15,7 +15,7 @@ users = {
 # Home page
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return redirect(url_for('bmi_calculator.home'))
 
 # About page
 @app.route('/about')
@@ -47,7 +47,7 @@ def login():
         
         if username in users and users[username]['password'] == password:
             # Example: set session variable for logged in user
-            return redirect(url_for('home'))
+            return redirect(url_for('bmi_calculator.home'))
         else:
             return render_template('login.html', error='Invalid username or password')
 
