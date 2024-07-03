@@ -14,6 +14,8 @@
     </form>
     {% if bmi_result %}
     <p>Your BMI is: {{ bmi_result|round(2) }}</p>
+    <p>Category: {{ bmi_category }}</p>
+    <p>Recommendation: {{ bmi_recommendation }}</p>
     {% endif %}
 </section>
 
