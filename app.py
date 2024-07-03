@@ -2,14 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mail import Mail, Message
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with your secret key
+app.secret_key = 'your_secret_key123456'  # Replace with your secret key
 
 # Configure Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'your_email@gmail.com'  # Replace with your email
-app.config['MAIL_PASSWORD'] = 'your_password'         # Replace with your password
+app.config['MAIL_USERNAME'] = 'csafstat@gmail.com'  # Replace with your email
+app.config['MAIL_PASSWORD'] = 'kipsamoh1989'         # Replace with your password
 
 mail = Mail(app)
 
