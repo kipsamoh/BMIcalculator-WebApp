@@ -1,28 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
-from app import db
-from models import User, Message  # Adjust as per your actual model names
+from . import db  # Import db from the package
+from .models import User, Message  # Import models from the package
 
 # Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
-
-@login_required
-def send_message():
-    name = request.form['name']
-    email = request.form['email']
-    message_content = request.form['message']
-    
-    # Create a new message object
-    new_message = Message(name=name, email=email, message=message_content)
-    
-    # Add the message to the database session
-    db.session.add(new_message)
-    db.session.commit()
-    
-    flash("Message sent successfully!")
-
-    return redirect(url_for('bmi_calculator.contact'))
 
 # Route for the Home page
 @bmi_calculator_blueprint.route('/')
