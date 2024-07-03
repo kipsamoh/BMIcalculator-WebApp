@@ -19,7 +19,7 @@ def home():
     return redirect(url_for('bmi_calculator.home'))
 
 # Ensure the database tables are created before the first request
-@app.before_first_request
+@app.before_startup
 def create_tables():
     from bmi_calculator import bmi_calculator_blueprint  # Import inside function to avoid circular import
     db.create_all()
