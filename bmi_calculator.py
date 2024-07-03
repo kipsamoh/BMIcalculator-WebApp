@@ -29,7 +29,7 @@ def about():
 # Route for the Blog page
 @bmi_calculator_blueprint.route('/blog')
 def blog():
-    # Sample data for blog posts (replace with actual data retrieval logic)
+    # blog posts
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
         {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
@@ -49,7 +49,7 @@ def login():
         # Implement your login logic here
         username = request.form['username']
         password = request.form['password']
-        # Example: Check username and password validity
+        # Check username and password validity
         if username == 'admin' and password == 'password':
             # Redirect to a protected page or dashboard
             return render_template('dashboard.html', username=username)
@@ -62,19 +62,19 @@ def login():
 # Route for the Dashboard (protected page)
 @bmi_calculator_blueprint.route('/dashboard')
 def dashboard():
-    # Example: Check if user is authenticated (session-based or token-based)
-    # For demonstration, assume authenticated
+    #Check if user is authenticated (session-based or token-based)
+    # uthenticated
     username = 'admin'  # Replace with actual authentication logic
     return render_template('dashboard.html', username=username)
 
-# Optional: Add more routes for additional pages as needed
+ #routes for additional pages as needed
 @bmi_calculator_blueprint.route('/settings')
 def settings():
     return render_template('settings.html')
 
 @bmi_calculator_blueprint.route('/profile')
 def profile():
-    # Fetch user profile data (replace with actual logic)
+    # Fetch user profile data 
     user_data = {'name': 'John Doe', 'email': 'john.doe@example.com', 'age': 30}
     return render_template('profile.html', user=user_data)
 
