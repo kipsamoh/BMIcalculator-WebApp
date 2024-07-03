@@ -102,3 +102,22 @@ def logout():
     logout_user()
     flash("You have been logged out.")
     return redirect(url_for('bmi_calculator.login'))
+
+# Route for sending a message
+@bmi_calculator_blueprint.route('/send_message', methods=['POST'])
+@login_required
+def send_message():
+    name = request.form['name']
+    email = request.form['email']
+    message_content = request.form['message']
+    
+    # Create a new message object
+    new_message = Message(name=name, email=email, message=message_content)
+    
+    # Add the message to the database session
+    db.session.add(new_message)
+    db.session.commit()
+    
+    flash("Message sent successfully!")
+
+    return redirect(url_for('bmi_calculator.contact'))
