@@ -1,23 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_mail import Mail, Message
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key123456'  # Replace with your secret key
-
-# Configure Flask-Mail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'csafstat@gmail.com'  # Replace with your email
-app.config['MAIL_PASSWORD'] = 'kipsamoh1989'         # Replace with your password
-
-mail = Mail(app)
-
-# Dummy users for login (replace with actual authentication logic)
-users = {
-    'user1': {'username': 'user1', 'password': 'password1'},
-    'user2': {'username': 'user2', 'password': 'password2'}
-}
+app.secret_key = 'your_secret_key'  # Necessary for flash messages to work
 
 # Route for home page
 @app.route('/')
@@ -49,7 +33,7 @@ def calculate_bmi():
 # Route for health & fitness blogs page
 @app.route('/health_fitness_blogs')
 def health_fitness_blogs():
-    # Blog posts data
+    # Dummy blog post data
     blog_posts = [
         {
             'title': 'Understanding the Body Mass Index (BMI): A Tool for Assessing Health',
@@ -98,39 +82,25 @@ def health_fitness_blogs():
     ]
     return render_template('health_fitness_blogs.html', posts=blog_posts)
 
-# Route for contact page with email form
+# Route for contact page
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
-        
-        # Send email
-        send_email(name, email, message)
-        
+        # Process form data (you can add more here if needed)
         flash('Thank you for your message! We will get back to you soon.', 'success')
         return redirect(url_for('contact'))
     return render_template('contact.html')
 
-def send_email(name, email, message):
-    msg = Message(subject='Contact Form Submission',
-                  sender='your_email@gmail.com',  # Replace with your email
-                  recipients=['recipient_email@example.com'])  # Replace with recipient email address
-    msg.body = f'You have received a new message from {name} ({email}):\n\n{message}'
-    mail.send(msg)
-
-# Route for login page
+# Route for login page (dummy implementation)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Dummy login logic (replace with actual authentication)
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         if username in users and users[username]['password'] == password:
             # Dummy login success handling (replace with actual session management)
             return redirect(url_for('home'))
-        else:
-            flash('Login unsuccessful. Please check your username and password.', 'danger')
     return render_template('login.html')
 
 if __name__ == '__main__':
