@@ -116,3 +116,32 @@ footer {
     margin-top: 1rem;
     color: #333;
 }
+
+#blog-posts {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#blog-posts h2 {
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.blog-post {
+    margin-bottom: 2rem;
+}
+
+.blog-post h3 {
+    color: #007bff;
+}
+
+.blog-post small {
+    color: #666;
+}
+
+.blog-post .blog-content {
+    margin-top: 1rem;
+    line-height: 1.8;
+}
