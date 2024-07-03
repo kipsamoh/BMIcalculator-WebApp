@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_required
 
 # Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
 
-# Example user store (replace with database in production)
+# In-memory user store (replace with your actual user management)
 users = {
     'john': {'password': generate_password_hash('password123')},
     'jane': {'password': generate_password_hash('password456')}
@@ -31,7 +32,6 @@ def about():
 # Route for the Blog page
 @bmi_calculator_blueprint.route('/blog')
 def blog():
-    # Example blog data (replace with actual data retrieval)
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
         {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
@@ -76,30 +76,28 @@ def register():
 
 # Route for the Dashboard (protected page)
 @bmi_calculator_blueprint.route('/dashboard')
+@login_required
 def dashboard():
-    if 'username' not in session:
-        return redirect(url_for('bmi_calculator.login'))
     username = session['username']
     return render_template('dashboard.html', username=username)
 
 # Route for the Profile page
 @bmi_calculator_blueprint.route('/profile')
+@login_required
 def profile():
-    if 'username' not in session:
-        return redirect(url_for('bmi_calculator.login'))
     username = session['username']
     user_data = users.get(username)
     return render_template('profile.html', user=user_data)
 
 # Route for the Settings page
 @bmi_calculator_blueprint.route('/settings')
+@login_required
 def settings():
-    if 'username' not in session:
-        return redirect(url_for('bmi_calculator.login'))
     return render_template('settings.html')
 
 # Route for the Logout
 @bmi_calculator_blueprint.route('/logout')
+@login_required
 def logout():
     session.pop('username', None)
     flash("You have been logged out.")
