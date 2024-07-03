@@ -1,11 +1,15 @@
+from app import db
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from models import User
 from flask_login import login_user, logout_user, current_user, login_required
-from . import db  # Import db from the package
-from .models import User, Message  # Import models from the package
 
 # Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # Route for the Home page
 @bmi_calculator_blueprint.route('/')
