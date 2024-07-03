@@ -9,12 +9,12 @@
 <body>
     <nav>
         <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="{{ url_for('blog') }}">Blog</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('bmi_calculator.home') }}">Home</a></li>
+            <li><a href="{{ url_for('bmi_calculator.about') }}">About</a></li>
+            <li><a href="{{ url_for('bmi_calculator.blog') }}">Blog</a></li>
+            <li><a href="{{ url_for('bmi_calculator.contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('bmi_calculator.dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('bmi_calculator.logout') }}">Logout</a></li>
         </ul>
     </nav>
 
@@ -32,4 +32,3 @@
     </footer>
 </body>
 </html>
-
