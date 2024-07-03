@@ -9,18 +9,17 @@
 <body>
     <nav>
         <ul>
-            <li><a href="{{ url_for('bmi_calculator.home') }}">Home</a></li>
-            <li><a href="{{ url_for('bmi_calculator.about') }}">About</a></li>
-            <li><a href="{{ url_for('bmi_calculator.blog') }}">Blog</a></li>
-            <li><a href="{{ url_for('bmi_calculator.contact') }}">Contact</a></li>
-            <li><a href="{{ url_for('bmi_calculator.login') }}">Login</a></li>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('blog') }}">Blog</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
         </ul>
     </nav>
 
     <main>
-        <h1>Keep fit & healthy. BMI Calculation Made Easy!</h1>
-        <img src="{{ url_for('static', filename='body-mass-index-fitness-.webp') }}" alt="BMI Care">
-        <div class="bmi-calculator">
+        <h1>Welcome to BMI Care!</h1>
+        <div class="container">
             <h2>BMI Calculator</h2>
             <form action="{{ url_for('bmi_calculator.calculate_bmi') }}" method="post">
                 <label for="height">Height (cm):</label>
