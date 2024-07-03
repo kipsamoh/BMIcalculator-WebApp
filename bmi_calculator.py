@@ -6,6 +6,9 @@ from flask_login import login_user, logout_user, current_user, login_required
 # Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
 
+# Adjust the import of login_manager after its initialization in app.py
+from app import login_manager
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
