@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Registering the blueprint for BMI calculator routes
 app.register_blueprint(bmi_calculator_blueprint)
 
-# Example user database (replace with your actual user management)
+#  user database (replace with your actual user management)
 users = {
     'john': {'password': 'password123'},
     'jane': {'password': 'password456'}
@@ -25,7 +25,7 @@ def about():
 # Blog page
 @app.route('/blog')
 def blog():
-    # Sample data for blog posts (replace with actual data retrieval logic)
+    # data for blog posts (replace with actual data retrieval logic)
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
         {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
@@ -46,7 +46,7 @@ def login():
         password = request.form['password']
         
         if username in users and users[username]['password'] == password:
-            # Example: set session variable for logged in user
+            #set session variable for logged in user
             return redirect(url_for('bmi_calculator.home'))
         else:
             return render_template('login.html', error='Invalid username or password')
