@@ -21,15 +21,15 @@ def calculate_bmi():
     bmi = weight / (height ** 2)
     return render_template('index.html', bmi_result=bmi)
 
-# Route for blog page
-@app.route('/Health & Fitness Blogs')
-def /HealthFitnessBlogs():
+# Route for Health & Fitness Blogs page
+@app.route('/health_fitness_blogs')
+def health_fitness_blogs():
     # Dummy blog posts (replace with actual data retrieval logic)
     blog_posts = [
         {'title': 'First Post', 'content': 'Content of first post'},
         {'title': 'Second Post', 'content': 'Content of second post'}
     ]
-    return render_template('blog.html', posts=blog_posts)
+    return render_template('health_fitness_blogs.html', posts=blog_posts)
 
 # Route for contact page
 @app.route('/contact')
