@@ -98,7 +98,6 @@ def contact():
         return redirect(url_for('contact'))
     return render_template('contact.html')
 
-
 # Route for login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
