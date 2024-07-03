@@ -10,13 +10,15 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f0f0f0;
+    background-color: #f7f9fc;
+    color: #333;
 }
 
 header {
-    background-color: #333;
+    background-color: #007bff;
     color: #fff;
     padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 nav ul {
@@ -26,12 +28,17 @@ nav ul {
 
 nav ul li {
     display: inline;
-    margin: 0 10px;
+    margin: 0 15px;
 }
 
 nav ul li a {
     color: #fff;
     text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
 }
 
 main {
@@ -50,21 +57,62 @@ footer {
 
 #bmi-calculator, #about-bmi {
     background: #fff;
-    padding: 1rem;
+    padding: 1.5rem;
     margin-bottom: 2rem;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#about-bmi h2, #about-bmi h3 {
+#bmi-calculator h2, #about-bmi h2 {
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+#bmi-calculator form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+#bmi-calculator form input {
+    width: calc(100% - 22px);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#bmi-calculator form button {
+    padding: 0.5rem 2rem;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#bmi-calculator form button:hover {
+    background-color: #0056b3;
+}
+
+#about-bmi h3 {
+    color: #007bff;
     margin-top: 1rem;
 }
 
 #about-bmi ul {
     margin: 0.5rem 0;
     padding-left: 1.5rem;
+    list-style-type: disc;
 }
 
 #about-bmi p, #about-bmi ul, #about-bmi li {
     margin-bottom: 0.5rem;
+}
+
+#bmi-calculator p {
+    font-weight: bold;
+    margin-top: 1rem;
+    color: #333;
 }
