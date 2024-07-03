@@ -3,82 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - BMI Care</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>About Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('bmi_calculator.home') }}">Home</a></li>
-            <li><a href="{{ url_for('bmi_calculator.about') }}">About</a></li>
-            <li><a href="{{ url_for('bmi_calculator.blog') }}">Blog</a></li>
-            <li><a href="{{ url_for('bmi_calculator.contact') }}">Contact</a></li>
-            <li><a href="{{ url_for('bmi_calculator.login') }}">Login</a></li>
-            <li><a href="{{ url_for('bmi_calculator.register') }}">Register</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <h1>About BMI Care</h1>
-        <p>
-            If you have been seen in our offices since October, some of you have likely seen our new ‘Weight Management’ handout that talks about your BMI. 
-            No, this was not mass printed to get everyone thinking about their New Year’s Resolutions earlier than usual! 
-            Our office, like many other health care providers, participates in a program that aims to improve Medicare by helping eligible clinicians focus 
-            on care quality and making patients healthier. As a result, we are required by Medicare to counsel patients in several different health and risk 
-            measures, and one that we focus on in an orthopedic setting is weight management.
-        </p>
-        <h2>BMI: A Standard Calculation of Health</h2>
-        <p>
-            Our practice follows the outlined standards for using BMI as a tool to calculate health. Looking at the included chart, there are four categories 
-            that one can fall into. In our clinic for instance, if BMI is considered ‘Normal’, weight management counseling is not initiated. For all other 
-            categories, one would meet criteria for weight management counseling.
-        </p>
-        <p>
-            You might be asking, “But why use BMI? I’ve read that it isn’t really accurate. Isn’t there a better way to calculate my health?” We totally get it! 
-            BMI is just one of the many standards available to calculate general weight classifications. In this blog we are going to take a look at the history 
-            of how BMI was implemented in healthcare.
-        </p>
-        <p>
-            Early in the 19th century, Belgian mathematician Lambert Adolphe Jacques Quetelet wanted to provide his government with a way to calculate a degree 
-            of obesity in the general population, and he developed a formula for what is known as BMI. He came up with the following formula: 
-            BMI = Weight in kilograms / height in meters^2. But why square the person's height? To be brief, Quetelet had to alter the formula of his equation 
-            to match the data available at the time.
-        </p>
-        <p>
-            Therefore, while not a perfect tool, this was the best tool they had 200 years ago!
-        </p>
-        <h2>BMI: A Standard Calculation of Health (Cont.)</h2>
-        <p>
-            Of course, some other limitations in using BMI as a health tool is that it does not allow you to factor in bones, muscle, or body fat percentage of 
-            an individual. In other words, if one leads a sedentary lifestyle and has a high body fat percentage, the diagnosis of obesity is valid. Comparatively, 
-            a 5’4’’ gymnast that is 150 pounds of pure muscle would have a BMI of 25.7, putting them into the ‘Overweight’ category.
-        </p>
-        <p>
-            Most people are not extreme athletes, so using BMI in most settings is a simple and fast way to calculate body fat.
-        </p>
-        <h2>What are some other ways to ‘calculate health’?</h2>
-        <p>
-            The Waist-to-Hip Ratio is another tool one can use to calculate obesity. This measurement calculates a person’s waist and hip circumferences to establish 
-            where on the body fat is stored. The location of fat stores can indicate those at higher risks for certain health-related conditions, such as type 2 diabetes 
-            and heart disease.
-        </p>
-        <p>
-            Limiting factors with this method include:
-        </p>
-        <ul>
-            <li>If the patient is a child.</li>
-            <li>Being shorter than 5 foot tall.</li>
-            <li>Having a BMI that is over 35.</li>
-            <li>Human error/taking measurements at different areas of the body.</li>
-        </ul>
-        <p>
-            Are you curious about your own BMI? Use the calculator provided to see where you fall on the ‘scale’! The providers at Kansas City Bone and Joint Clinic 
-            can help guide you to take the appropriate steps to reach whatever goals you set for yourself.
-        </p>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 BMI Care. All rights reserved.</p>
-    </footer>
+    <div class="container">
+        <header>
+            <h1>About Us</h1>
+        </header>
+        <section class="intro">
+            <p>Welcome to our BMI Calculator application. Our mission is to help you maintain a healthy lifestyle by providing an easy-to-use tool for calculating your Body Mass Index (BMI). Staying healthy is essential, and we are here to assist you with valuable insights and recommendations.</p>
+            <p>Our tool helps you determine your BMI and offers personalized recommendations based on your results:</p>
+            <ul>
+                <li><strong>Underweight (BMI &lt; 18.5):</strong> Consider incorporating nutrient-dense foods into your diet, such as lean proteins, whole grains, and healthy fats. Regular strength training exercises can also help build muscle mass.</li>
+                <li><strong>Normal weight (BMI 18.5 - 24.9):</strong> Maintain your current lifestyle with a balanced diet rich in fruits, vegetables, proteins, and whole grains. Regular physical activity, including both cardio and strength training, is crucial for overall health.</li>
+                <li><strong>Overweight (BMI 25 - 29.9):</strong> Aim to reduce your weight through a combination of healthy eating and increased physical activity. Focus on portion control, reducing processed foods, and incorporating more whole foods into your diet.</li>
+                <li><strong>Obesity (BMI &gt; 30):</strong> Prioritize weight loss for improved health. Seek guidance from healthcare professionals to develop a tailored plan that includes dietary changes, regular exercise, and possibly behavioral therapy. Monitoring your progress and making gradual, sustainable changes can lead to long-term success.</li>
+            </ul>
+        </section>
+        <section class="bmi-info">
+            <h2>What is BMI?</h2>
+            <p>Body Mass Index (BMI) is a tool that estimates body fat by measuring the ratio of height to weight. It helps assess the risk for various health conditions. While useful, BMI is not always a precise indicator of body composition.</p>
+            
+            <h2>How is BMI Calculated?</h2>
+            <p>BMI is calculated by dividing weight in kilograms by the square of height in meters (kg/m²). Generally, a higher BMI suggests more body fat, but it doesn’t always accurately represent body composition for everyone.</p>
+            
+            <h2>BMI Classifications:</h2>
+            <ul>
+                <li>Underweight: Less than 18.5</li>
+                <li>Normal weight: 18.5 to 24.9</li>
+                <li>Overweight: 25 to 29.9</li>
+                <li>Obesity Class I: 30 to 34.9</li>
+                <li>Obesity Class II: 35 to 39.9</li>
+                <li>Obesity Class III: 40 and above</li>
+            </ul>
+            
+            <h2>Uses of BMI:</h2>
+            <p>Healthcare providers use BMI to diagnose weight categories and as a screening tool for health risks. High body fat can lead to heart disease, diabetes, and other conditions, while low body fat may be associated with malnutrition and weakened immunity.</p>
+            
+            <h2>Limitations of BMI:</h2>
+            <ul>
+                <li>BMI does not distinguish between muscle and fat.</li>
+                <li>It uses the same chart for both males and females, despite differences in body fat distribution.</li>
+                <li>BMI may not be accurate for athletes, children, the elderly, and pregnant individuals.</li>
+            </ul>
+            
+            <h2>Health Risks Associated with BMI:</h2>
+            <ul>
+                <li>Underweight: Malnutrition, anemia, weakened immune system, osteoporosis.</li>
+                <li>Overweight/Obesity: Heart disease, high blood pressure, type 2 diabetes, certain cancers, and mental health issues.</li>
+            </ul>
+            
+            <h2>Calculation Example:</h2>
+            <p>To calculate BMI:</p>
+            <ol>
+                <li>Multiply your weight in pounds by 703.</li>
+                <li>Divide by your height in inches twice.</li>
+            </ol>
+            <p>For instance, a person weighing 180 lbs and 5 feet 5 inches tall (65 inches) has a BMI of 29.9.</p>
+            
+            <h2>Conclusion:</h2>
+            <p>While BMI is a useful tool for quick assessment, it should not be the sole measure of health. Consult healthcare providers for a comprehensive health evaluation.</p>
+        </section>
+    </div>
 </body>
 </html>
