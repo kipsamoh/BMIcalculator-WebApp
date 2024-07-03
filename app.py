@@ -23,7 +23,7 @@ def calculate_bmi():
 
 # Route for blog page
 @app.route('/blog')
-def blog():
+def HealthFitnessBlogs():
     # Dummy blog posts (replace with actual data retrieval logic)
     blog_posts = [
         {'title': 'First Post', 'content': 'Content of first post'},
