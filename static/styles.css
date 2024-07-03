@@ -48,6 +48,23 @@ footer {
     width: 100%;
 }
 
-#health-fitness-blogs article {
+#bmi-calculator, #about-bmi {
+    background: #fff;
+    padding: 1rem;
     margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#about-bmi h2, #about-bmi h3 {
+    margin-top: 1rem;
+}
+
+#about-bmi ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+#about-bmi p, #about-bmi ul, #about-bmi li {
+    margin-bottom: 0.5rem;
 }
