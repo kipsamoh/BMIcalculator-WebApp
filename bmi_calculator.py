@@ -1,37 +1,25 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_required
 
-# Blueprint definition
 bmi_calculator_blueprint = Blueprint('bmi_calculator', __name__)
 
-# In-memory user store (replace with your actual user management)
-users = {
-    'john': {'password': generate_password_hash('password123')},
-    'jane': {'password': generate_password_hash('password456')}
-}
-
-# Route for the Home page
+# Routes within the BMI Calculator blueprint
 @bmi_calculator_blueprint.route('/')
 def home():
     return render_template('index.html')
 
-# Route for BMI calculation
 @bmi_calculator_blueprint.route('/calculate_bmi', methods=['POST'])
 def calculate_bmi():
-    height = float(request.form['height'])
-    weight = float(request.form['weight'])
-    bmi = weight / ((height / 100) ** 2)
+    # Handle BMI calculation logic here
     return render_template('index.html', bmi=bmi)
 
-# Route for the About page
 @bmi_calculator_blueprint.route('/about')
 def about():
     return render_template('about.html')
 
-# Route for the Blog page
 @bmi_calculator_blueprint.route('/blog')
 def blog():
+    # Dummy data for demonstration
     blog_posts = [
         {'title': 'First Blog Post', 'content': 'Lorem ipsum dolor sit amet...'},
         {'title': 'Second Blog Post', 'content': 'Consectetur adipiscing elit...'},
@@ -39,66 +27,25 @@ def blog():
     ]
     return render_template('blog.html', blog_posts=blog_posts)
 
-# Route for the Contact page
 @bmi_calculator_blueprint.route('/contact')
 def contact():
     return render_template('contact.html')
 
-# Route for the Login page
 @bmi_calculator_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = users.get(username)
-        if user and check_password_hash(user['password'], password):
-            session['username'] = username
-            return redirect(url_for('bmi_calculator.dashboard'))
-        else:
-            flash("Invalid credentials. Please try again.")
+        # Handle login logic
+        return redirect(url_for('bmi_calculator.dashboard'))  # Redirect to dashboard on successful login
+    
     return render_template('login.html')
 
-# Route for the Registration page
 @bmi_calculator_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        if username in users:
-            flash("Username already exists. Please choose a different one.")
-        else:
-            hashed_password = generate_password_hash(password, method='sha256')
-            users[username] = {'email': email, 'password': hashed_password}
-            flash("Registration successful! Please log in.")
-            return redirect(url_for('bmi_calculator.login'))
+        # Handle registration logic
+        return redirect(url_for('bmi_calculator.login'))  # Redirect to login page after successful registration
+    
     return render_template('register.html')
 
-# Route for the Dashboard (protected page)
-@bmi_calculator_blueprint.route('/dashboard')
-@login_required
-def dashboard():
-    username = session['username']
-    return render_template('dashboard.html', username=username)
+# Additional routes for dashboard, profile, settings, and logout within the blueprint should be defined here
 
-# Route for the Profile page
-@bmi_calculator_blueprint.route('/profile')
-@login_required
-def profile():
-    username = session['username']
-    user_data = users.get(username)
-    return render_template('profile.html', user=user_data)
-
-# Route for the Settings page
-@bmi_calculator_blueprint.route('/settings')
-@login_required
-def settings():
-    return render_template('settings.html')
-
-# Route for the Logout
-@bmi_calculator_blueprint.route('/logout')
-@login_required
-def logout():
-    session.pop('username', None)
-    flash("You have been logged out.")
-    return redirect(url_for('bmi_calculator.login'))
