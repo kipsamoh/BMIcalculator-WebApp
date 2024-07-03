@@ -9,11 +9,12 @@
 <body>
     <nav>
         <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="{{ url_for('blog') }}">Blog</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('bmi_calculator.home') }}">Home</a></li>
+            <li><a href="{{ url_for('bmi_calculator.about') }}">About</a></li>
+            <li><a href="{{ url_for('bmi_calculator.blog') }}">Blog</a></li>
+            <li><a href="{{ url_for('bmi_calculator.contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('bmi_calculator.login') }}">Login</a></li>
+            <li><a href="{{ url_for('bmi_calculator.register') }}">Register</a></li>
         </ul>
     </nav>
 
@@ -39,14 +40,13 @@
             <h3>Alternative Health Calculations</h3>
             <p>Another method to assess obesity is the Waist-to-Hip Ratio, which measures waist and hip circumferences to determine fat distribution. This method can indicate higher risks for health conditions like type 2 diabetes and heart disease.</p>
             
-            <p>However, this method has limitations:
+            <p>However, this method has limitations:</p>
             <ul>
                 <li>It’s not suitable for children.</li>
                 <li>It’s less accurate for those under 5 feet tall.</li>
                 <li>It’s not recommended for individuals with a BMI over 35.</li>
                 <li>Measurement inaccuracies can occur if taken at different body sites.</li>
             </ul>
-            </p>
             
             <h3>Curious About Your BMI?</h3>
             <p>Use our provided calculator to see where you fall on the scale! At Kansas City Bone and Joint Clinic, our providers can help you set and achieve your health goals.</p>
