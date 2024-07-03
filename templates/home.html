@@ -9,11 +9,11 @@
 <body>
     <nav>
         <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="{{ url_for('blog') }}">Blog</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('bmi_calculator.home') }}">Home</a></li>
+            <li><a href="{{ url_for('bmi_calculator.about') }}">About</a></li>
+            <li><a href="{{ url_for('bmi_calculator.blog') }}">Blog</a></li>
+            <li><a href="{{ url_for('bmi_calculator.contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('bmi_calculator.login') }}">Login</a></li>
         </ul>
     </nav>
 
@@ -22,7 +22,7 @@
         <img src="{{ url_for('static', filename='body-mass-index-fitness-.webp') }}" alt="BMI Care">
         <div class="bmi-calculator">
             <h2>BMI Calculator</h2>
-            <form action="/calculate_bmi" method="post">
+            <form action="{{ url_for('bmi_calculator.calculate_bmi') }}" method="post">
                 <label for="height">Height (cm):</label>
                 <input type="number" id="height" name="height" required>
 
@@ -31,6 +31,21 @@
 
                 <button type="submit">Calculate BMI</button>
             </form>
+            {% if bmi %}
+                <div class="result">
+                    <h3>BMI Result</h3>
+                    <p>Your BMI is: {{ bmi | round(1) }}</p>
+                    {% if bmi < 18.5 %}
+                        <p>You are underweight. You should consider gaining some weight.</p>
+                    {% elif bmi >= 18.5 and bmi < 24.9 %}
+                        <p>Your weight is normal. Keep up the good work!</p>
+                    {% elif bmi >= 25 and bmi < 29.9 %}
+                        <p>You are overweight. You should consider losing some weight.</p>
+                    {% else %}
+                        <p>You are obese. It's important to prioritize weight loss for your health.</p>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
     </main>
 
