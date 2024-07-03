@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from bmi_calc import bmi_calculator_blueprint
+from bmi_calculator import bmi_calculator_blueprint
 
 # Initialize Flask application
 app = Flask(__name__)
