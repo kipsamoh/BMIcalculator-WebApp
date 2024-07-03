@@ -87,9 +87,17 @@ def health_fitness_blogs():
     return render_template('health_fitness_blogs.html', posts=blog_posts)
     
 # Route for contact page
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        # Here you can add code to handle the submitted data, such as sending an email or saving it to a database
+        flash('Thank you for your message! We will get back to you soon.', 'success')
+        return redirect(url_for('contact'))
     return render_template('contact.html')
+
 
 # Route for login page
 @app.route('/login', methods=['GET', 'POST'])
