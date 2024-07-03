@@ -9,13 +9,13 @@
 <body>
     <nav>
         <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="{{ url_for('blog') }}">Blog</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            <li><a href="{{ url_for('profile') }}">Profile</a></li>
-            <li><a href="{{ url_for('settings') }}">Settings</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('bmi_calculator.home') }}">Home</a></li>
+            <li><a href="{{ url_for('bmi_calculator.about') }}">About</a></li>
+            <li><a href="{{ url_for('bmi_calculator.blog') }}">Blog</a></li>
+            <li><a href="{{ url_for('bmi_calculator.contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('bmi_calculator.profile') }}">Profile</a></li>
+            <li><a href="{{ url_for('bmi_calculator.settings') }}">Settings</a></li>
+            <li><a href="{{ url_for('bmi_calculator.logout') }}">Logout</a></li>
         </ul>
     </nav>
 
@@ -23,8 +23,8 @@
         <h1>Dashboard</h1>
         <p>Welcome, {{ username }}! This is your dashboard.</p>
         <div class="dashboard-links">
-            <a href="{{ url_for('profile') }}">View Profile</a>
-            <a href="{{ url_for('settings') }}">Settings</a>
+            <a href="{{ url_for('bmi_calculator.profile') }}">View Profile</a>
+            <a href="{{ url_for('bmi_calculator.settings') }}">Settings</a>
         </div>
     </div>
 
@@ -33,4 +33,3 @@
     </footer>
 </body>
 </html>
-
