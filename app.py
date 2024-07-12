@@ -27,6 +27,8 @@ class User(db.Model, UserMixin):
 class BMIHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bmi = db.Column(db.Float, nullable=False)
+    bmi_category = db.Column(db.String(50), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -35,6 +37,7 @@ class ContactMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    time = db.Column(db.Time, nullable=False, default=datetime.utcnow().time())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 # Admin views
@@ -57,6 +60,7 @@ def home():
 def calculate_bmi():
     height = float(request.form['height'])
     weight = float(request.form['weight'])
+    age = int(request.form['age'])
     bmi = weight / (height ** 2)
 
     if bmi < 18.5:
@@ -73,7 +77,7 @@ def calculate_bmi():
         recommendation = 'It is advisable to consult a healthcare provider for guidance on achieving a healthier weight.'
 
     if current_user.is_authenticated:
-        bmi_record = BMIHistory(bmi=bmi, user_id=current_user.id)
+        bmi_record = BMIHistory(bmi=bmi, bmi_category=category, age=age, user_id=current_user.id)
         db.session.add(bmi_record)
         db.session.commit()
 
@@ -136,8 +140,9 @@ def health_fitness_blogs():
 def contact():
     if request.method == 'POST':
         message = request.form['message']
+        current_time = datetime.utcnow().time()
         if current_user.is_authenticated:
-            contact_message = ContactMessage(message=message, user_id=current_user.id)
+            contact_message = ContactMessage(message=message, user_id=current_user.id, time=current_time)
             db.session.add(contact_message)
             db.session.commit()
         flash('Thank you for your message! We will get back to you soon.', 'success')
@@ -146,7 +151,7 @@ def contact():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
+    if request.method == 'POST']:
         username = request.form['username']
         password = request.form['password']
         
@@ -162,7 +167,7 @@ def login():
 # Route for register page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
+    if request.method == 'POST']:
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
