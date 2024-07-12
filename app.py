@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Necessary for flash messages to work
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bmicare.db'
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)  # Initialize Flask-Migrate
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 admin = Admin(app, name='BMICare Admin', template_mode='bootstrap3')
@@ -21,6 +20,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
+    age = db.Column(db.Integer)  # Age field added
     is_admin = db.Column(db.Boolean, default=False)  # Admin field added
     bmi_history = db.relationship('BMIHistory', backref='user', lazy=True)
     contact_messages = db.relationship('ContactMessage', backref='user', lazy=True)
@@ -29,8 +29,7 @@ class User(db.Model, UserMixin):
 class BMIHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bmi = db.Column(db.Float, nullable=False)
-    bmi_category = db.Column(db.String(50), nullable=False)
-    age = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String(50), nullable=False)  # BMI category added
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -39,7 +38,7 @@ class ContactMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    time = db.Column(db.Time, nullable=False, default=datetime.utcnow().time())
+    time = db.Column(db.Time, nullable=False, default=datetime.now().time())  # Time column added
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 # Admin views
@@ -62,7 +61,6 @@ def home():
 def calculate_bmi():
     height = float(request.form['height'])
     weight = float(request.form['weight'])
-    age = int(request.form['age'])
     bmi = weight / (height ** 2)
 
     if bmi < 18.5:
@@ -79,7 +77,7 @@ def calculate_bmi():
         recommendation = 'It is advisable to consult a healthcare provider for guidance on achieving a healthier weight.'
 
     if current_user.is_authenticated:
-        bmi_record = BMIHistory(bmi=bmi, bmi_category=category, age=age, user_id=current_user.id)
+        bmi_record = BMIHistory(bmi=bmi, category=category, user_id=current_user.id)
         db.session.add(bmi_record)
         db.session.commit()
 
@@ -142,9 +140,8 @@ def health_fitness_blogs():
 def contact():
     if request.method == 'POST':
         message = request.form['message']
-        time = datetime.utcnow().time()
         if current_user.is_authenticated:
-            contact_message = ContactMessage(message=message, time=time, user_id=current_user.id)
+            contact_message = ContactMessage(message=message, user_id=current_user.id)
             db.session.add(contact_message)
             db.session.commit()
         flash('Thank you for your message! We will get back to you soon.', 'success')
@@ -160,6 +157,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             login_user(user)
+            flash('Login successful!', 'success')
             return redirect(url_for('dashboard'))
         else:
             flash('Wrong credentials! Please try again.', 'error')
@@ -169,15 +167,16 @@ def login():
 # Route for register page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST']:
+    if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        age = request.form.get('age', type=int)  # Age field added
         is_admin = request.form.get('is_admin') == 'on'  # Check if checkbox is checked
 
         existing_user = User.query.filter_by(username=username).first()
         if existing_user is None:
-            user = User(username=username, email=email, password=password, is_admin=is_admin)
+            user = User(username=username, email=email, password=password, age=age, is_admin=is_admin)
             db.session.add(user)
             db.session.commit()
             flash('Registration successful! You can now log in.', 'success')
