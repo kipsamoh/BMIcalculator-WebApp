@@ -153,7 +153,6 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             login_user(user)
-            flash('Login successful!', 'success')
             return redirect(url_for('dashboard'))
         else:
             flash('Wrong credentials! Please try again.', 'error')
