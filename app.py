@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
@@ -9,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Necessary for flash messages to work
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bmicare.db'
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)  # Initialize Flask-Migrate
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 admin = Admin(app, name='BMICare Admin', template_mode='bootstrap3')
@@ -135,78 +137,4 @@ def health_fitness_blogs():
     ]
     return render_template('health_fitness_blogs.html', posts=blog_posts)
 
-# Route for contact page
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    if request.method == 'POST':
-        message = request.form['message']
-        current_time = datetime.utcnow().time()
-        if current_user.is_authenticated:
-            contact_message = ContactMessage(message=message, user_id=current_user.id, time=current_time)
-            db.session.add(contact_message)
-            db.session.commit()
-        flash('Thank you for your message! We will get back to you soon.', 'success')
-        return redirect(url_for('contact'))
-    return render_template('contact.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST']:
-        username = request.form['username']
-        password = request.form['password']
-        
-        user = User.query.filter_by(username=username).first()
-        if user and user.password == password:
-            login_user(user)
-            return redirect(url_for('dashboard'))
-        else:
-            flash('Wrong credentials! Please try again.', 'error')
-    
-    return render_template('login.html')
-
-# Route for register page
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST']:
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        is_admin = request.form.get('is_admin') == 'on'  # Check if checkbox is checked
-
-        existing_user = User.query.filter_by(username=username).first()
-        if existing_user is None:
-            user = User(username=username, email=email, password=password, is_admin=is_admin)
-            db.session.add(user)
-            db.session.commit()
-            flash('Registration successful! You can now log in.', 'success')
-            return redirect(url_for('login'))
-        else:
-            flash('Username already exists. Please choose a different one.', 'error')
-    
-    return render_template('register.html')
-
-# Route for user dashboard
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    bmi_history = BMIHistory.query.filter_by(user_id=current_user.id).all()
-    contact_messages = ContactMessage.query.filter_by(user_id=current_user.id).all()
-
-    return render_template('dashboard.html', bmi_history=bmi_history, contact_messages=contact_messages)
-
-# Route for logout
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    flash('You have been logged out.', 'info')
-    return redirect(url_for('home'))
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+# Route for contact 
