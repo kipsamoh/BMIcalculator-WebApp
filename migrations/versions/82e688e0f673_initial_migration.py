@@ -22,7 +22,7 @@ def upgrade():
     # Add is_admin column to User
     with op.batch_alter_table('user', schema=None) as batch_op:
         batch_op.add_column(sa.Column('is_admin', sa.Boolean(), nullable=True))
-        batch_op.add_column(sa.Column('age', sa.Integer(), nullable=False))  # Add age column
+        batch_op.add_column(sa.Column('age', sa.Integer(), nullable=True, server_default='0'))  # Default to 0 or another appropriate value
 
     # Add category column to BMIHistory
     with op.batch_alter_table('bmi_history', schema=None) as batch_op:
@@ -30,7 +30,7 @@ def upgrade():
 
     # Add time column to ContactMessage
     with op.batch_alter_table('contact_message', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('time', sa.Time(), nullable=False, server_default=sa.sql.expression.func.current_time()))
+        batch_op.add_column(sa.Column('time', sa.Time(), nullable=True, server_default=sa.sql.expression.func.current_time()))
 
     # ### end Alembic commands ###
 
@@ -49,4 +49,4 @@ def downgrade():
         batch_op.drop_column('age')
         batch_op.drop_column('is_admin')
 
-    # ### end Alembic commands ### 
+    # ### end Alembic commands ###
