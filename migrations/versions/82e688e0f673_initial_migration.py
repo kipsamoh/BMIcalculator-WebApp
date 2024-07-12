@@ -32,20 +32,15 @@ def upgrade():
 
 
 def downgrade():
-    # Check if 'time' column exists before dropping
+    # Attempt to drop 'time' column
     with op.batch_alter_table('contact_message', schema=None) as batch_op:
-        if 'time' in [col['name'] for col in batch_op.get_columns()]:
-            batch_op.drop_column('time')
+        batch_op.drop_column('time', nullable=True)
 
-    # Check if 'category' column exists before dropping
+    # Attempt to drop 'category' column
     with op.batch_alter_table('bmi_history', schema=None) as batch_op:
-        if 'category' in [col['name'] for col in batch_op.get_columns()]:
-            batch_op.drop_column('category')
+        batch_op.drop_column('category', nullable=True)
 
-    # Check if 'age' and 'is_admin' columns exist before dropping
+    # Attempt to drop 'age' and 'is_admin' columns
     with op.batch_alter_table('user', schema=None) as batch_op:
-        if 'age' in [col['name'] for col in batch_op.get_columns()]:
-            batch_op.drop_column('age')
-        if 'is_admin' in [col['name'] for col in batch_op.get_columns()]:
-            batch_op.drop_column('is_admin')
-
+        batch_op.drop_column('age', nullable=True)
+        batch_op.drop_column('is_admin', nullable=True)
