@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="admin-dashboard">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">Admin Dashboard</h2>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>BMI History</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>BMI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for bmi_record in bmi_history %}
+                                            <tr>
+                                                <td>{{ bmi_record.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                                <td style="color: blue;">{{ bmi_record.bmi }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <h3>Contact Messages</h3>
+                                <ul class="list-group">
+                                    {% for message in contact_messages %}
+                                    <li class="list-group-item" style="background-color: lightyellow;">{{ message.message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
