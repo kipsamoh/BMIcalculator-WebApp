@@ -32,26 +32,20 @@ def upgrade():
 
 
 def downgrade():
-    # Drop columns in reverse order
+    # Check if 'time' column exists before dropping
     with op.batch_alter_table('contact_message', schema=None) as batch_op:
-        try:
+        if 'time' in [col['name'] for col in batch_op.get_columns()]:
             batch_op.drop_column('time')
-        except Exception:
-            pass  # Ignore if the column does not exist
 
+    # Check if 'category' column exists before dropping
     with op.batch_alter_table('bmi_history', schema=None) as batch_op:
-        try:
+        if 'category' in [col['name'] for col in batch_op.get_columns()]:
             batch_op.drop_column('category')
-        except Exception:
-            pass  # Ignore if the column does not exist
 
+    # Check if 'age' and 'is_admin' columns exist before dropping
     with op.batch_alter_table('user', schema=None) as batch_op:
-        try:
+        if 'age' in [col['name'] for col in batch_op.get_columns()]:
             batch_op.drop_column('age')
-        except Exception:
-            pass  # Ignore if the column does not exist
-        try:
+        if 'is_admin' in [col['name'] for col in batch_op.get_columns()]:
             batch_op.drop_column('is_admin')
-        except Exception:
-            pass  # Ignore if the column does not exist
 
