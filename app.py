@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
 class BMIHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bmi = db.Column(db.Float, nullable=False)
-    category = db.Column(db.String(50), nullable=False)  # Added BMI category field
+    category = db.Column(db.String(50), nullable=False)  #BMI category field
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -39,7 +39,7 @@ class ContactMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    time = db.Column(db.Time, nullable=False, default=datetime.utcnow)  # Added time field
+    time = db.Column(db.Time, nullable=False, default=datetime.utcnow)  #time field
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 # Admin views
@@ -144,8 +144,7 @@ def register():
         email = request.form['email']
         password = request.form['password']
         age = int(request.form['age'])  # Get user age
-        is_admin = request.form.get('is_admin') == 'on'  # Check if checkbox is checked
-
+        is_admin = request.form.get('is_admin') == 'on'  # Check for checkbox
         existing_user = User.query.filter_by(username=username).first()
         if existing_user is None:
             user = User(username=username, email=email, password=password, age=age, is_admin=is_admin)
@@ -181,5 +180,5 @@ def load_user(user_id):
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # This can be removed once migrations are in place
+        db.create_all()  # migrations
     app.run(debug=True)
